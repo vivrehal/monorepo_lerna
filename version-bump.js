@@ -42,4 +42,4 @@ if (currentBranch === 'develop') {
 }
 
 execSync('git push --follow-tags');
-execSync('lerna publish from-package --yes');
+execSync('lerna publish from-package --yes'); 

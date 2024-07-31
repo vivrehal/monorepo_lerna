@@ -12,7 +12,6 @@ const getChangedLines = () => {
     return insertions + deletions;
   } catch (error) {
     console.error('Error getting changed lines:', error.message);
-    // If there's an error (like no previous commit), treat it as the first commit.
     return 0;
   }
 };
@@ -41,5 +40,7 @@ if (currentBranch === 'develop') {
   execSync(`lerna version ${versionType} --force-publish --yes --no-push`);
 }
 
-execSync('git push --follow-tags');
-execSync('lerna publish from-package --yes'); 
+// Use the personal GitHub token to push changes
+const repoUrl = `https://${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
+execSync(`git push ${repoUrl} --follow-tags`);
+execSync('lerna publish from-package --yes');

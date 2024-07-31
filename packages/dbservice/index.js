@@ -1,1 +1,1 @@
-console.log("packages/dbservice/index.js");
+console.log("dbservice");

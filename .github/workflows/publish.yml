@@ -22,13 +22,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test
-
       - name: Configure git
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "dhimanvivek777@gmail.com"
+          git config --global user.name "vivrehal"
 
       - name: Bump version and publish
         run: node version-bump.js

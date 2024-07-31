@@ -1,15 +1,20 @@
 const { execSync } = require('child_process');
-const fs = require('fs');
 
 const getChangedLines = () => {
-  const diffOutput = execSync('git diff HEAD~1 HEAD --shortstat').toString();
-  const matches = diffOutput.match(/(\d+) insertions?\(\+\), (\d+) deletions?\(\-\)/);
-  if (!matches) return 0;
+  try {
+    const diffOutput = execSync('git diff HEAD~1 HEAD --shortstat').toString();
+    const matches = diffOutput.match(/(\d+) insertions?\(\+\), (\d+) deletions?\(\-\)/);
+    if (!matches) return 0;
 
-  const insertions = parseInt(matches[1], 10);
-  const deletions = parseInt(matches[2], 10);
+    const insertions = parseInt(matches[1], 10);
+    const deletions = parseInt(matches[2], 10);
 
-  return insertions + deletions;
+    return insertions + deletions;
+  } catch (error) {
+    console.error('Error getting changed lines:', error.message);
+    // If there's an error (like no previous commit), treat it as the first commit.
+    return 0;
+  }
 };
 
 const bumpVersion = () => {

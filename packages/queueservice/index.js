@@ -1,1 +1,1 @@
-console.log("packages/queueservice/index.js");
+console.log("queueservice");

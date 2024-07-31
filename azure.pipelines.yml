@@ -1,0 +1,29 @@
+trigger:
+  branches:
+    include:
+      - develop
+      - master
+
+jobs:
+  - job: publish
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - task: UseNode@2
+        inputs:
+          versionSpec: '14.x'
+          checkLatest: true
+
+      - script: |
+          npm install
+          npm test
+        displayName: 'Install dependencies and run tests'
+
+      - script: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          node version-bump.js
+        displayName: 'Bump version and publish'
+        env:
+          GITHUB_TOKEN: $(GITHUB_TOKEN)
+          NPM_TOKEN: $(NPM_TOKEN)
